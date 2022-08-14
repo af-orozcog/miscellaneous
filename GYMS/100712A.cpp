@@ -23,8 +23,10 @@ const ld eps = 1e-9;
 const ll mod = 998244353;
 const ll lel = 1e12;
 
-ll fastSum(ll n){
-    return (n*(n+1))>>1;
+bool comp(const pair<string,pii> &a, const pair<string,pii> &b){
+    if(a.ss.ff > b.ss.ff) return 1;
+    else if(a.ss.ff < b.ss.ff) return 0;
+    return a.ss.ss < b.ss.ss;
 }
 
 int main(){
@@ -35,16 +37,12 @@ int main(){
     while(t--){
         int n;
         cin >> n;
-        if(n == 1) cout << 2;
-        else if(n == 2) cout << 1;
-        else if(n == 3) cout << 1;
-        else if(n == 4) cout << 3;
-        else {
-            int ans = (n % 3 == 0 ? n / 3 : (n % 3 == 1 ? (n / 3 + 1) : (n / 3 + 1)));
-            if (n % 2 == 0) ans = min(ans, n / 2);
-            cout << ans;
-        }
-        cout << "\n";
+        vector<pair<string,pii>> per(n);
+        for(auto &va:per)
+            cin >> va.ff >> va.ss.ff >> va.ss.ss;
+
+        sort(per.begin(),per.end(),comp);
+        cout << per[0].ff << "\n";
     }
     return 0;
 }

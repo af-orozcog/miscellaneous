@@ -23,10 +23,6 @@ const ld eps = 1e-9;
 const ll mod = 998244353;
 const ll lel = 1e12;
 
-ll fastSum(ll n){
-    return (n*(n+1))>>1;
-}
-
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -35,16 +31,20 @@ int main(){
     while(t--){
         int n;
         cin >> n;
-        if(n == 1) cout << 2;
-        else if(n == 2) cout << 1;
-        else if(n == 3) cout << 1;
-        else if(n == 4) cout << 3;
-        else {
-            int ans = (n % 3 == 0 ? n / 3 : (n % 3 == 1 ? (n / 3 + 1) : (n / 3 + 1)));
-            if (n % 2 == 0) ans = min(ans, n / 2);
-            cout << ans;
+        string see;
+        cin >> see;
+        int dp[n][2];
+        dp[0][0] = (see[0] != '*');
+        dp[0][1] = 1000000000;
+        if(n > 1){
+            dp[1][0] = (see[1] != '*');
+            dp[1][1] = dp[0][0];
         }
-        cout << "\n";
+        for(int i = 2; i < see.size();++i){
+            dp[i][1] = dp[i-1][0];
+            dp[i][0] = min(dp[i-2][1],min(dp[i-1][0],dp[i-1][1])) + (see[i] != '*');
+        }
+        cout << min(dp[n-1][0],dp[n-1][1]) << "\n";
     }
     return 0;
 }

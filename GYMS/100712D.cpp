@@ -23,28 +23,28 @@ const ld eps = 1e-9;
 const ll mod = 998244353;
 const ll lel = 1e12;
 
-ll fastSum(ll n){
-    return (n*(n+1))>>1;
-}
-
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int t;
     cin >> t;
     while(t--){
-        int n;
-        cin >> n;
-        if(n == 1) cout << 2;
-        else if(n == 2) cout << 1;
-        else if(n == 3) cout << 1;
-        else if(n == 4) cout << 3;
-        else {
-            int ans = (n % 3 == 0 ? n / 3 : (n % 3 == 1 ? (n / 3 + 1) : (n / 3 + 1)));
-            if (n % 2 == 0) ans = min(ans, n / 2);
-            cout << ans;
+        int n,k;
+        cin >> n >> k;
+        char see[n];
+        for(auto &va:see) cin >> va;
+        vector<ll> dp(n+1,INT_MAX);
+        dp[0] = -1;
+        for(int i = 1; i <= n;++i){
+            bool bad = 1;
+            dp[i] = dp[i-1]+1;
+            for(int j = i-1,tama = 2; j > 0 && tama <= k;--j){
+                if(see[j-1] == see[j]) bad = 0;
+                if(!bad) dp[i] = min(dp[i],dp[j-1]+1);
+            }
         }
-        cout << "\n";
+
+        cout << dp.back() << "\n";
     }
     return 0;
 }

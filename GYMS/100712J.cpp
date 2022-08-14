@@ -23,28 +23,36 @@ const ld eps = 1e-9;
 const ll mod = 998244353;
 const ll lel = 1e12;
 
-ll fastSum(ll n){
-    return (n*(n+1))>>1;
-}
-
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int t;
     cin >> t;
     while(t--){
-        int n;
-        cin >> n;
-        if(n == 1) cout << 2;
-        else if(n == 2) cout << 1;
-        else if(n == 3) cout << 1;
-        else if(n == 4) cout << 3;
-        else {
-            int ans = (n % 3 == 0 ? n / 3 : (n % 3 == 1 ? (n / 3 + 1) : (n / 3 + 1)));
-            if (n % 2 == 0) ans = min(ans, n / 2);
-            cout << ans;
+        int n,m;
+        cin >> n >> m;
+        //cout << n << "\n";
+        //cout << m << "\n";
+        map<int,int> ages,candy;
+        for(int i = 0; i < n;++i){
+            int see; cin >> see;
+            ++ages[see];
         }
-        cout << "\n";
+        for(int i = 0; i < m;++i){
+            int see; cin >> see;
+            ++candy[see];
+        }
+        auto it1 = ages.rbegin();
+        auto it2 = candy.rbegin();
+        while(it2 != candy.rend() && it1 != ages.rend()){
+            if(it2->second >= it1->second)
+                it1++,it2++;
+            else{
+                while(it2 != candy.rend() && it2->second < it1->second) ++it2;
+            }
+        }
+
+        cout << (it1 == ages.rend()?"YES":"NO") << "\n";
     }
     return 0;
 }

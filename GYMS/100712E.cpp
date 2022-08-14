@@ -23,10 +23,6 @@ const ld eps = 1e-9;
 const ll mod = 998244353;
 const ll lel = 1e12;
 
-ll fastSum(ll n){
-    return (n*(n+1))>>1;
-}
-
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -35,16 +31,15 @@ int main(){
     while(t--){
         int n;
         cin >> n;
-        if(n == 1) cout << 2;
-        else if(n == 2) cout << 1;
-        else if(n == 3) cout << 1;
-        else if(n == 4) cout << 3;
-        else {
-            int ans = (n % 3 == 0 ? n / 3 : (n % 3 == 1 ? (n / 3 + 1) : (n / 3 + 1)));
-            if (n % 2 == 0) ans = min(ans, n / 2);
-            cout << ans;
+        vector<int> nums(n);
+        for(auto &va:nums) cin >> va;
+        sort(nums.begin(),nums.end());
+        int dif = 100 - nums.back();
+        int ans = 0;
+        for(auto va:nums){
+            ans += (va+dif >= 50);
         }
-        cout << "\n";
+        cout << ans << "\n";
     }
     return 0;
 }

@@ -23,28 +23,29 @@ const ld eps = 1e-9;
 const ll mod = 998244353;
 const ll lel = 1e12;
 
-ll fastSum(ll n){
-    return (n*(n+1))>>1;
-}
-
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int t;
     cin >> t;
     while(t--){
-        int n;
-        cin >> n;
-        if(n == 1) cout << 2;
-        else if(n == 2) cout << 1;
-        else if(n == 3) cout << 1;
-        else if(n == 4) cout << 3;
-        else {
-            int ans = (n % 3 == 0 ? n / 3 : (n % 3 == 1 ? (n / 3 + 1) : (n / 3 + 1)));
-            if (n % 2 == 0) ans = min(ans, n / 2);
-            cout << ans;
+        int n,s;
+        cin >> n >> s;
+        vector<int> coins(n);
+        for(auto &va:coins) cin >> va;
+        sort(coins.begin(),coins.end());
+        reverse(coins.begin(),coins.end());
+        vector<vector<int>> dp(n+1,vector<int>(s+1+200,INT_MIN));
+        dp[0][0] = 0;
+        int ans = 0;
+        for(int i = 1; i <= n;++i){
+            for(int j = 0; j < dp[i].size();++j){
+                dp[i][j] = dp[i-1][j];
+                if(j-coins[i-1] >= 0) dp[i][j] = max(dp[i][j],dp[i-1][j-coins[i-1]]+1);
+                if(j-coins[i-1] < s && j >= s) ans = max(ans,dp[i][j]);
+            }
         }
-        cout << "\n";
+        cout << ans << "\n";
     }
     return 0;
 }

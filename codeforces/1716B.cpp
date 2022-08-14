@@ -23,8 +23,9 @@ const ld eps = 1e-9;
 const ll mod = 998244353;
 const ll lel = 1e12;
 
-ll fastSum(ll n){
-    return (n*(n+1))>>1;
+void printVector(vector<int> &see){
+    for(auto va:see) cout << va << " ";
+    cout << "\n";
 }
 
 int main(){
@@ -34,17 +35,14 @@ int main(){
     cin >> t;
     while(t--){
         int n;
-        cin >> n;
-        if(n == 1) cout << 2;
-        else if(n == 2) cout << 1;
-        else if(n == 3) cout << 1;
-        else if(n == 4) cout << 3;
-        else {
-            int ans = (n % 3 == 0 ? n / 3 : (n % 3 == 1 ? (n / 3 + 1) : (n / 3 + 1)));
-            if (n % 2 == 0) ans = min(ans, n / 2);
-            cout << ans;
+        vector<int> use(n);
+        for(int i = 0; i < n;++i) use[i] = i+1;
+        cout << n << "\n";
+        printVector(use);
+        for(int i = n-2; i > -1;--i){
+            swap(use[i],use[i+1]);
+            printVector(use);
         }
-        cout << "\n";
     }
     return 0;
 }
