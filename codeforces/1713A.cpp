@@ -23,10 +23,6 @@ const ld eps = 1e-9;
 const ll mod = 998244353;
 const ll lel = 1e12;
 
-ll fastSum(ll n){
-    return (n*(n+1))>>1;
-}
-
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -35,15 +31,19 @@ int main(){
     while(t--){
         int n;
         cin >> n;
-        int minX,maxX,minY,maxY;
-        minX = maxX = minY = maxY = 0;
-        for(int i = 0; i < n; i++){
-            int x,y;
-            cin >> x >> y;
-            minX = min(minX,x), maxX = max(maxX,x);
-            minY = min(minY,y), maxY = max(maxY,y);
+        vector<int> nums(n);
+        for(auto &va:nums) cin >> va;
+        int dp[n];
+        dp[0] = 1;
+        for(int i = 1; i < n;++i){
+            int see = (nums[i] ^ nums[i-1]);
+            int cost = 0;
+            if(see & nums[i]) ++cost;
+            if(see & nums[i+1])++cost;
+            cost += (nums[i] != 0);
+            dp[i] = min(1+dp[i-1],cost+(i > 1? dp[i-2]:0));
         }
-        cout << (abs(minX) + maxX + maxY + abs(minY))<<1 << "/n";
+        cout << dp[n-1] << "\n";
     }
     return 0;
 }
