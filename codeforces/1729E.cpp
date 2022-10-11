@@ -23,25 +23,25 @@ const ld eps = 1e-9;
 const ll mod = 998244353;
 const ll lel = 1e12;
 
-bool valid(vector<ll> vals, ll posi){
-    set<ll> dif;
-
-    return (dif.size() == 1)
-}
-
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    vector<ll> vals;
-    for(int i = 0; i < 46;++i){
-        cout << "? " << 1 << i+2 << "\n";
-        ll dist;
-        cin >> dist;
-        if(dist > 0) vals.pb(dist);
+    for(int i = 0,j = 3; i < 25;++i,++j){
+        ll val1,val2;
+        cout << "? " << 1 << " " << j << endl;
+        cin >> val1;
+        cout << "? " << j << " " << 1 << endl;
+        cin >> val2;
+        if(val1 == val2){
+            if(val1 == -1){
+                cout << "! " << j-1 << endl;
+                break;
+            }
+        }
+        else{
+            cout << "! " << val1 + val2 << endl;
+            break;
+        }
     }
-    ll possible1
-
-    cout << "! " << n << "\n";
-
     return 0;
 }

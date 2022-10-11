@@ -24,7 +24,6 @@ const ll mod = 998244353;
 const ll lel = 1e12;
 
 const ll INF  = (1LL<<62);
-
 struct MaxFlow{
     int nodes,src,dst;
     vector<int> dist,q,work;
@@ -61,8 +60,8 @@ struct MaxFlow{
         return 0;
     }
     /*
-     * Aqui es super importante resaltar que cuando se llama el método varias veces lo que retorna es la mejora en el
-     * flujo respecto a la vez pasada que se llamó, no el flujo total actual.
+     * Aqui es super importante resaltar que cuando se llama el mÃ©todo varias veces lo que retorna es la mejora en el
+     * flujo respecto a la vez pasada que se llamÃ³, no el flujo total actual.
      */
     ll max_flow(int _src, int _dst){
         src=_src;dst=_dst;
@@ -75,31 +74,21 @@ struct MaxFlow{
     }
 };
 
-
-int main(){
+ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n; cin >> n;
-    auto graph = MaxFlow(n+2);
-    vector<int> out(n+1,0),to(n+1,0);
-    for(int i = 1; i <= n;++i){
+    auto graph = MaxFlow(n*2 + 2);
+    for(int i = 1;i <= n;++i){
         int k; cin >> k;
         while(k--){
-            out[i] = 1;
-            int see; cin >> see;
-            ++see;
-            to[see] = 1;
-            graph.add_edge(i,see,1);
+            int val; ++val;
+            graph.add_edge(i,val+n,1);
         }
-        graph.add_edge(i,n+1,1);
+        graph.add_edge(0,i,1);
+        graph.add_edge(i+n,n*2+1,1);
     }
 
-    for(int i = 1;i < out.size();++i){
-        if(!to[i])
-            graph.add_edge(0,i,1);
-    }
-
-    cout << graph.max_flow(0,n+1) << "\n";
-
+    cout << n - graph.max_flow(0,2*n + 1) << "\n";
     return 0;
-}
+ }
